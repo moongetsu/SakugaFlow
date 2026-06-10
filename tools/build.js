@@ -183,7 +183,7 @@ async function runBuild() {
     console.log('\n\u{1F4E6} Packaging and signing ZXP...');
     const certPath = path.join(__dirname, 'cert.p12');
     const versionDir = path.join(__dirname, '..', 'dist', PROFILE.label);
-    const zxpOutputPath = path.join(versionDir, `${EXTENSION_NAME}.zxp`);
+    const zxpOutputPath = path.join(__dirname, '..', 'dist', `${EXTENSION_NAME}_${PROFILE.label}.zxp`);
 
     if (!fs.existsSync(versionDir)) {
         fs.mkdirSync(versionDir, { recursive: true });

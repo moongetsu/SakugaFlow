@@ -63,6 +63,13 @@ jobs:
           path: dist/SakugaFlow_AE${{ matrix.target }}.zxp
           if-no-files-found: warn
 
+      - name: Upload EXE
+        uses: actions/upload-artifact@v4
+        with:
+          name: SakugaFlow_EXE_AE${{ matrix.target }}
+          path: dist/AE${{ matrix.target }}/SakugaFlowSetup_AE${{ matrix.target }}.exe
+          if-no-files-found: warn
+
   release:
     needs: build
     if: github.event_name == 'release'
@@ -74,9 +81,17 @@ jobs:
           pattern: SakugaFlow_ZXP_*
           merge-multiple: true
 
+      - name: Download EXE artifacts
+        uses: actions/download-artifact@v4
+        with:
+          pattern: SakugaFlow_EXE_*
+          merge-multiple: true
+
       - name: Upload to release
         uses: softprops/action-gh-release@v2
         with:
-          files: SakugaFlow_*.zxp
+          files: |
+            SakugaFlow_*.zxp
+            SakugaFlowSetup_*.exe
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

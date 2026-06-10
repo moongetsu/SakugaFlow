@@ -221,10 +221,19 @@ async function runBuild() {
         isccPaths.unshift(path.join(process.env.LOCALAPPDATA, 'Programs', 'Inno Setup 5', 'ISCC.exe'));
     }
     let isccPath = null;
-    for (const p of isccPaths) {
-        if (fs.existsSync(p)) {
-            isccPath = p;
-            break;
+    const { execSync } = require('child_process');
+    
+    // First check if iscc is available in the system PATH
+    try {
+        execSync('iscc /?', { stdio: 'ignore' });
+        isccPath = 'iscc';
+    } catch (e) {
+        // Not in PATH, check standard paths
+        for (const p of isccPaths) {
+            if (fs.existsSync(p)) {
+                isccPath = p;
+                break;
+            }
         }
     }
 
@@ -232,8 +241,11 @@ async function runBuild() {
         try {
             console.log('   - Compiling installer script...');
             const issPath = path.join(__dirname, 'installer.iss');
-            const { execSync } = require('child_process');
-            execSync(`"${isccPath}" /DSourcePath="${DIST_DIR}" /DOutputDir="${versionDir}" /DOutputName="${EXTENSION_NAME}Setup" "${issPath}"`, { stdio: 'inherit' });
+            const outputName = `${EXTENSION_NAME}Setup_${PROFILE.label}`;
+            const cmd = isccPath === 'iscc' 
+                ? `iscc /DSourcePath="${DIST_DIR}" /DOutputDir="${versionDir}" /DOutputName="${outputName}" "${issPath}"`
+                : `"${isccPath}" /DSourcePath="${DIST_DIR}" /DOutputDir="${versionDir}" /DOutputName="${outputName}" "${issPath}"`;
+            execSync(cmd, { stdio: 'inherit' });
             console.log('\u2728 Successfully compiled installer EXE!');
         } catch (execErr) {
             console.error('\u274C Failed to compile installer EXE:', execErr.message);

@@ -94,9 +94,77 @@ cd .. && npm run build:all
 
 Credit for the original concept of a dedicated Sakugabooru fetcher extension for After Effects goes to the creators of **Sakugaloader**.
 
-When the concept was first released, I wanted to contribute to its development - fixing bugs, optimizing code, and maintaining support for older versions of After Effects. Because collaboration was not possible and support for older AE versions was dropped in the original tool, I decided to build a new alternative from scratch.
+When the concept was first released, I wanted to contribute to its development—fixing bugs, optimizing code, and maintaining support for older versions of After Effects. Because collaboration was not possible and support for older AE versions was dropped in the original tool, I decided to build a new alternative from scratch.
 
 This extension is written entirely from the ground up, shares no code with other plugins, and supports CC 2018 through CC 2026.
+
+### 🔍 Technical Differences & Codebase Proof
+
+A side-by-side comparison of the codebase files and configurations proves that **SakugaFlow** is written entirely from scratch with a completely different architecture and features:
+
+#### 1. Directory Structure Comparison
+* **Sakugaloader** utilizes a single monolithic bundled production file for its logic:
+  ```
+  📂 Sakugloader/
+  ├── 📂 CSXS/
+  │   └── manifest.xml (Locks host version to [18.0, 26.9], dropping CC 2018)
+  ├── 📂 client/
+  │   ├── index.html
+  │   ├── main.js (233 KB monolithic compiled file)
+  │   └── style.css (64 KB)
+  └── 📂 host/
+      └── index.jsx (Simple JSX bridge)
+  ```
+* **SakugaFlow** is designed with a highly modular, readable, component-based architecture:
+  ```
+  📂 SakugaFlow/
+  ├── 📂 CSXS/
+  │   └── manifest.xml (Dynamic host version generated at build time)
+  ├── 📂 css/ (Modular CSS sheets: base.css, grid.css, player.css, console.css, etc.)
+  ├── 📂 js/
+  │   ├── 📂 components/ (searchPanel.js, libraryPanel.js, upscalePanel.js, consolePanel.js, etc.)
+  │   └── 📂 utils/ (downloader.js, fileSystem.js, storage.js)
+  └── 📂 jsx/
+      └── host.jsx (Custom native ExtendScript handler)
+  ```
+
+#### 2. Host Version Compatibility (manifest.xml)
+* **Sakugaloader**'s manifest restricts compatibility to newer releases only:
+  ```xml
+  <!-- Sakugaloader manifest.xml -->
+  <Host Name="AEFT" Version="[18.0,26.9]"/>
+  ```
+* **SakugaFlow**'s build tools inject custom compat manifest files dynamically depending on the build target to support **CC 2018 (v15.0)** up to **CC 2026+ (v99.9)**.
+
+#### 3. Build & Packaging Automation
+* **Sakugaloader** lacks automation scripts, requiring manual ZIP compression and certificate generation.
+* **SakugaFlow** features a customized Node-based build toolchain ([tools/build.js](file:///c:/Users/Moongetsu/Documents/GitHub/SakugaFlowNew/tools/build.js)) that automates:
+  * JavaScript obfuscation (`javascript-obfuscator`).
+  * ExtendScript compiling (`jsxbin`).
+  * Automated ZXP packaging & self-signed certificate generation (`zxp-sign-cmd`).
+  * Automatic Inno Setup installer packaging (`ISCC`).
+
+#### 4. Codebase Architecture & Scope Isolation
+* **Sakugaloader** consolidates its logic into a single giant global file (`client/main.js`, over 8,750 lines) with global scoping:
+  ```javascript
+  let library = loadLibrary();
+  let favorites = loadFavorites();
+  function init() { ... }
+  ```
+* **SakugaFlow** isolates logic to prevent global conflicts. Its root (`js/main.js`) is only 799 lines, structured in a namespace pattern:
+  ```javascript
+  (function () {
+    const App = {
+      init() { ... },
+      switchTab(tab) { ... }
+    };
+    window.addEventListener("DOMContentLoaded", () => {
+      App.init();
+      window.App = App;
+    });
+  })();
+  ```
+* **ExtendScript Functions:** ExtendScript calls are isolated and prefixed under `sakugaflowJson` and `getSelectedSakugaflowLayerFile` to prevent conflict with other installed panels, whereas Sakugaloader uses `sakugloaderJson`.
 
 ---
 

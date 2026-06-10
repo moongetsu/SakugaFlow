@@ -83,6 +83,13 @@ async function runBuild() {
     console.log('\u{1F4C2} Copying files to dist...');
     copyFolderSync(SRC_DIR, DIST_DIR);
 
+    // Apply compatibility overlays if they exist
+    const compatDir = path.join(__dirname, 'compat', TARGET);
+    if (fs.existsSync(compatDir)) {
+        console.log(`\u{1F4C2} Applying compatibility overlay for ${PROFILE.label} (${TARGET})...`);
+        copyFolderSync(compatDir, DIST_DIR);
+    }
+
     
     console.log('\u{1F512} Obfuscating JavaScript files...');
     const jsFiles = getFiles(DIST_DIR, '.js');

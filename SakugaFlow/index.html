@@ -1,0 +1,584 @@
+<!doctype html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>SakugaFlow</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="./css/style.css">
+</head>
+
+<body>
+  <div class="app">
+    <nav class="topbar">
+      <div class="topbar-brand">
+        <img src="SakugaFlow-Logo.png" alt="SakugaFlow" class="topbar-logo-img">
+      </div>
+      <div class="topbar-nav">
+        <button id="searchTabBtn" class="topbar-tab active" title="Search">
+          <svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" stroke-width="2.5" fill="none"
+            stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+        </button>
+        <button id="libraryTabBtn" class="topbar-tab" title="Library">
+          <svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" stroke-width="2.5" fill="none"
+            stroke-linecap="round" stroke-linejoin="round">
+            <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path>
+          </svg>
+        </button>
+        <button id="scenePacksTabBtn" class="topbar-tab" title="Scene Packs">
+          <svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" stroke-width="2.5" fill="none"
+            stroke-linecap="round" stroke-linejoin="round">
+            <rect x="2" y="2" width="20" height="20" rx="2.18" ry="2.18"></rect>
+            <line x1="7" y1="2" x2="7" y2="22"></line>
+            <line x1="17" y1="2" x2="17" y2="22"></line>
+            <line x1="2" y1="12" x2="22" y2="12"></line>
+            <line x1="2" y1="7" x2="7" y2="7"></line>
+            <line x1="2" y1="17" x2="7" y2="17"></line>
+            <line x1="17" y1="17" x2="22" y2="17"></line>
+            <line x1="17" y1="7" x2="22" y2="7"></line>
+          </svg>
+        </button>
+        <button id="upscaleTabBtn" class="topbar-tab" title="Upscale">
+          <svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" stroke-width="2.5" fill="none"
+            stroke-linecap="round" stroke-linejoin="round">
+            <path
+              d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94z">
+            </path>
+          </svg>
+        </button>
+        <button id="consoleTabBtn" class="topbar-tab" title="Console">
+          <svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" stroke-width="2.5" fill="none"
+            stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="4 17 10 11 4 5"></polyline>
+            <line x1="12" y1="19" x2="20" y2="19"></line>
+          </svg>
+        </button>
+        <button id="settingsTabBtn" class="topbar-tab" title="Settings">
+          <svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" stroke-width="2.5" fill="none"
+            stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="3"></circle>
+            <path
+              d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z">
+            </path>
+          </svg>
+        </button>
+        <button id="aboutTabBtn" class="topbar-tab" title="About">
+          <svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" stroke-width="2.5" fill="none"
+            stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="12" y1="16" x2="12" y2="12"></line>
+            <line x1="12" y1="8" x2="12.01" y2="8"></line>
+          </svg>
+        </button>
+      </div>
+      <div class="topbar-end"></div>
+    </nav>
+
+    <main class="content">
+      <div id="searchView" class="tab-content hidden">
+        <div class="search-row">
+          <div class="search-box">
+            <input id="search" autocomplete="off" spellcheck="false"
+              placeholder="Search tags (comma-separated)... e.g. frieren, yutaka nakamura, effects">
+            <div id="suggestions" class="suggestions hidden"></div>
+          </div>
+          <button id="btn" class="search-submit-btn">Search</button>
+        </div>
+
+        <div class="search-filters-row">
+          <div class="filter-group">
+            <label>Order By</label>
+            <div id="searchOrderDropdown"></div>
+          </div>
+          <div class="filter-group">
+            <label>Rating</label>
+            <div id="searchRatingDropdown"></div>
+          </div>
+        </div>
+
+        <div id="saveSearchTagBar" class="save-search-tag-bar hidden">
+          <button id="saveSearchTagBtn" class="save-search-tag-btn">Save tag</button>
+          <button id="clearSearchResultsBtn" class="clear-search-results-btn">Clear search</button>
+          <div id="saveSearchTagText" class="save-search-tag-text"></div>
+        </div>
+
+        <div id="latestClipsBar" class="latest-clips-bar">
+          <button id="latestClipsBtn" class="latest-clips-btn">Recently Added Clips</button>
+        </div>
+
+        <div id="savedSearchTagsBox" class="saved-search-tags-box hidden">
+          <div class="saved-search-tags-head">
+            <button id="toggleSavedTagsBtn" class="saved-tags-toggle-btn" title="Open / close saved tags">▼</button>
+            <div class="saved-search-tags-title">Saved tags</div>
+          </div>
+          <div id="savedSearchTagsList" class="saved-search-tags-list"></div>
+        </div>
+
+        <div id="status"></div>
+      </div>
+
+      <div id="libraryView" class="tab-content hidden">
+        <div id="libraryStatus"></div>
+      </div>
+
+      <div id="scenePacksView" class="tab-content hidden">
+        <div class="scene-packs-toolbar">
+          <div class="folder-row" style="flex: 1;">
+            <div id="scenePackFolderSelect" style="flex: 1;"></div>
+            <button id="chooseScenePackBtn" class="setting-btn">Add Folder</button>
+          </div>
+        </div>
+        <div id="scenePacksStatus"></div>
+      </div>
+
+      <div id="upscaleView" class="tab-content hidden">
+        <div class="upscale-toolbar">
+          <button class="upscale-cat-btn active" data-target="upscale-workspace">Workspace</button>
+          <button class="upscale-cat-btn" data-target="upscale-history">History</button>
+          <button class="upscale-cat-btn" data-target="upscale-tools-tab">Tools</button>
+        </div>
+
+        <div class="upscale-layout">
+
+          <div id="upscale-workspace" class="upscale-section">
+            <div class="upscale-workspace-layout">
+              <div class="upscale-sidebar">
+                <div class="upscale-panel drop-panel">
+                  <div class="upscale-panel-header">
+                    <div>
+                      <div class="upscale-title">Add Clips</div>
+                    </div>
+                    <div class="upscale-actions">
+                      <button id="addSelectedAeClipBtn" class="upscale-secondary-btn icon-btn"
+                        title="Add Selected AE Clip">
+                        <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor"
+                          stroke-width="2">
+                          <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
+                          <line x1="12" y1="8" x2="12" y2="16" />
+                          <line x1="8" y1="12" x2="16" y2="12" />
+                        </svg>
+                      </button>
+                      <button id="addExternalUpscaleBtn" class="upscale-secondary-btn icon-btn"
+                        title="Add External Clip">
+                        <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor"
+                          stroke-width="2">
+                          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                          <polyline points="17 8 12 3 7 8" />
+                          <line x1="12" y1="3" x2="12" y2="15" />
+                        </svg>
+                      </button>
+                    </div>
+                  </div>
+
+                  <div id="upscaleDropZone" class="upscale-drop-zone">
+                    <svg class="upscale-drop-icon" viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.5">
+                      <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                      <polyline points="17 8 12 3 7 8"/>
+                      <line x1="12" y1="3" x2="12" y2="15"/>
+                    </svg>
+                    <div class="upscale-drop-title">Drop videos here</div>
+                    <div class="upscale-drop-subtitle">MP4, MOV, WEBM</div>
+                  </div>
+                </div>
+
+                <div class="upscale-panel status-panel">
+                  <div class="upscale-panel-header">
+                    <div>
+                      <div class="upscale-title">Process Status</div>
+                    </div>
+                    <div class="upscale-process-actions">
+                      <button id="processImportUpscaledBtn" class="upscale-process-btn import" disabled>Import</button>
+                      <button id="processFolderUpscaledBtn" class="upscale-process-btn" disabled>Folder</button>
+                    </div>
+                  </div>
+
+                  <div class="upscale-status-box">
+                    <div id="upscaleStatusText" class="upscale-status-text">Waiting for clips...</div>
+                    <div class="upscale-progress-bar">
+                      <div id="upscaleProgressFill" class="upscale-progress-fill"></div>
+                    </div>
+                    <div class="upscale-progress-meta">
+                      <span id="upscaleProgressText" class="upscale-progress-text">0%</span>
+                      <span id="upscaleProgressStep" class="upscale-progress-step"></span>
+                    </div>
+                    <div class="upscale-status-steps">
+                      <div class="upscale-step" data-step="trimming">Trim</div>
+                      <div class="upscale-step" data-step="extracting">Extract</div>
+                      <div class="upscale-step" data-step="enhancing">AI Scale</div>
+                      <div class="upscale-step" data-step="building">Encode</div>
+                      <div class="upscale-step" data-step="done">Done</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="upscale-main">
+                <div class="upscale-panel queue-panel">
+                  <div class="upscale-panel-header">
+                    <div>
+                      <div class="upscale-title">Queue</div>
+                    </div>
+                    <div class="upscale-actions">
+                      <button id="clearUpscaleQueueBtn" class="upscale-secondary-btn">Clear</button>
+                      <button id="startUpscaleBtn" class="upscale-main-btn">Start</button>
+                    </div>
+                  </div>
+                  <div id="upscaleQueueSummary" class="upscale-queue-summary">
+                    <div class="upscale-queue-stat">
+                      <span class="upscale-queue-stat-label">Total</span>
+                      <span id="queueStatTotal" class="upscale-queue-stat-value">0</span>
+                    </div>
+                    <div class="upscale-queue-stat">
+                      <span class="upscale-queue-stat-label">Waiting</span>
+                      <span id="queueStatWaiting" class="upscale-queue-stat-value">0</span>
+                    </div>
+                    <div class="upscale-queue-stat">
+                      <span class="upscale-queue-stat-label">Processing</span>
+                      <span id="queueStatProcessing" class="upscale-queue-stat-value">0</span>
+                    </div>
+                    <div class="upscale-queue-stat">
+                      <span class="upscale-queue-stat-label">Done</span>
+                      <span id="queueStatDone" class="upscale-queue-stat-value">0</span>
+                    </div>
+                    <div class="upscale-queue-stat">
+                      <span class="upscale-queue-stat-label">Failed</span>
+                      <span id="queueStatFailed" class="upscale-queue-stat-value">0</span>
+                    </div>
+                  </div>
+                  <div id="upscaleQueueList" class="upscale-queue-list">
+                    <div class="upscale-empty">No clips in queue yet.</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div id="upscale-history" class="upscale-section hidden">
+            <div class="upscale-panel history-panel" id="upscaleSessionHistoryPanel">
+              <div class="upscale-panel-header">
+                <div>
+                  <div class="upscale-title">Render History</div>
+                </div>
+                <button id="clearUpscaleSessionHistoryBtn" class="upscale-secondary-btn small">Clear</button>
+              </div>
+              <div class="upscale-history-header-row">
+                <div class="upscale-history-stat-card">
+                  <span class="stat-label">Total Renders</span>
+                  <span id="history-total-count" class="stat-val">0</span>
+                </div>
+                <div class="upscale-history-stat-card">
+                  <span class="stat-label">This Session</span>
+                  <span id="history-session-count" class="stat-val">0</span>
+                </div>
+                <button id="openUpscalesFolderBtn" class="upscale-secondary-btn open-folder-btn" title="Open output folder">
+                  <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/>
+                  </svg>
+                  Open Folder
+                </button>
+              </div>
+              <div id="upscaleSessionHistoryList" class="upscale-session-history-list">
+                <div class="upscale-empty">No renders in this session yet.</div>
+              </div>
+            </div>
+          </div>
+
+          <div id="upscale-tools-tab" class="upscale-section hidden">
+
+          </div>
+        </div>
+      </div>
+
+      <div id="consoleView" class="tab-content hidden">
+        <div class="console-toolbar">
+          <div class="console-filters">
+            <button class="console-filter-btn active"
+              onclick="window.setLogFilter('level','all');this.parentElement.querySelectorAll('.console-filter-btn').forEach(function(b){b.classList.remove('active');});this.classList.add('active');">All</button>
+            <button class="console-filter-btn"
+              onclick="window.setLogFilter('level','error');this.parentElement.querySelectorAll('.console-filter-btn').forEach(function(b){b.classList.remove('active');});this.classList.add('active');">Error</button>
+            <button class="console-filter-btn"
+              onclick="window.setLogFilter('level','warn');this.parentElement.querySelectorAll('.console-filter-btn').forEach(function(b){b.classList.remove('active');});this.classList.add('active');">Warn</button>
+            <button class="console-filter-btn"
+              onclick="window.setLogFilter('level','info');this.parentElement.querySelectorAll('.console-filter-btn').forEach(function(b){b.classList.remove('active');});this.classList.add('active');">Info</button>
+            <button class="console-filter-btn"
+              onclick="window.setLogFilter('level','debug');this.parentElement.querySelectorAll('.console-filter-btn').forEach(function(b){b.classList.remove('active');});this.classList.add('active');">Debug</button>
+          </div>
+          <div class="console-search-wrap">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="11" cy="11" r="8" />
+              <line x1="21" y1="21" x2="16.65" y2="16.65" />
+            </svg>
+            <input id="consoleSearch" type="text" placeholder="Search logs..." autocomplete="off" spellcheck="false">
+          </div>
+          <div class="console-actions">
+            <button id="consoleClearBtn" class="console-action-btn danger">Clear</button>
+            <button id="consoleExportBtn" class="console-action-btn">Export</button>
+          </div>
+        </div>
+        <div id="consoleEntries" class="console-entries"></div>
+      </div>
+
+      <div id="settingsView" class="tab-content hidden">
+        <div class="settings-toolbar">
+          <button class="settings-cat-btn active" data-target="settings-appearance">Appearance</button>
+          <button class="settings-cat-btn" data-target="settings-features">Features</button>
+          <button class="settings-cat-btn" data-target="settings-background">Background</button>
+          <button class="settings-cat-btn" data-target="settings-storage">Storage</button>
+        </div>
+
+        <div id="settingsPanel" class="settings-page">
+          <div class="settings-grid">
+
+            <div id="settings-appearance" class="settings-section">
+              <div class="settings-card">
+                <div class="settings-card-title">Appearance</div>
+                <div class="settings-card-body">
+                  <div id="cardSizeSetting"></div>
+                  <div class="setting-group">
+                  </div>
+                  <div id="hoverAudioEnabledSetting" class="setting-group">
+                  </div>
+                  <div id="hoverVolumeSetting" class="setting-group">
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div id="settings-features" class="settings-section hidden">
+              <div class="settings-card">
+                <div class="settings-card-title">Features</div>
+                <div class="settings-card-body">
+                  <div id="upscaleEnabledSetting" class="setting-group">
+                  </div>
+                  <div id="scenePacksEnabledSetting" class="setting-group">
+                  </div>
+                  <div id="consoleEnabledSetting" class="setting-group">
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div id="settings-background" class="settings-section hidden">
+              <div class="settings-card">
+                <div class="settings-card-title">Background</div>
+                <div class="settings-card-body">
+                  <div class="setting-group">
+                    <div class="setting-label">Background image</div>
+                    <div class="folder-row">
+                      <div id="backgroundFileText" class="folder-text">Default background</div>
+                      <button id="chooseBackgroundBtn" class="setting-btn">Choose</button>
+                      <button id="clearBackgroundBtn" class="setting-btn danger-btn">Clear</button>
+                    </div>
+                    <div class="setting-note">Supports JPG, PNG, WEBP and GIF files.</div>
+                  </div>
+                  <div id="backgroundOpacitySetting"></div>
+                  <div id="backgroundBlurSetting"></div>
+                  <div id="glassOpacitySetting"></div>
+                  <div id="gradientOpacitySetting"></div>
+                </div>
+              </div>
+            </div>
+
+            <div id="settings-storage" class="settings-section hidden">
+              <div class="settings-card">
+                <div class="settings-card-title">Storage</div>
+                <div class="settings-card-body">
+                  <div class="setting-group">
+                    <div class="setting-label">Download folder</div>
+                    <div class="folder-row">
+                      <div id="downloadFolderText" class="folder-text"></div>
+                      <button id="chooseFolderBtn" class="setting-btn">Choose</button>
+                    </div>
+                  </div>
+
+                  <div class="setting-group">
+                    <div class="setting-label">Preview cache</div>
+                    <div class="folder-row">
+                      <div id="cacheInfoText" class="folder-text">Limit: 700 MB</div>
+                      <button id="clearCacheBtn" class="setting-btn danger-btn">Clear cache</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <div id="aboutView" class="tab-content hidden">
+        <div class="settings-page">
+          <div class="settings-toolbar">
+            <button class="about-cat-btn active" data-target="about-general">About</button>
+            <button class="about-cat-btn" data-target="about-project">Project</button>
+            <button class="about-cat-btn" data-target="about-community">Community</button>
+            <button class="about-cat-btn" data-target="about-credits">Credits & Background</button>
+            <button class="about-cat-btn" data-target="about-usage">Usage</button>
+          </div>
+
+          <div id="about-general" class="about-section">
+            <div class="settings-card">
+              <div class="settings-card-title">About</div>
+              <div class="settings-card-body">
+                <p>SakugaFlow v0.1b</p>
+                <p>SakugaFlow is a free unofficial After Effects CEP extension made for reference and editing workflows.</p>
+                <p>It searches Sakugabooru, previews clips, downloads selected files locally, and imports them into After Effects.</p>
+              </div>
+            </div>
+          </div>
+
+          <div id="about-project" class="about-section hidden">
+            <div class="settings-card">
+              <div class="settings-card-title">Project</div>
+              <div class="settings-card-body">
+                <p>SakugaFlow is an independent project. It shares no code with Sakugaloader and was built from scratch
+                  with a different structure and features.</p>
+                <button id="openGithubBtn" class="about-link-btn"
+                  onclick="window.Downloader.openInBrowser('https://github.com/Moongetsu/SakugaFlow')">
+                  <svg viewBox="0 0 24 24" width="12" height="12" stroke="currentColor" stroke-width="2" fill="none"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <path
+                      d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22">
+                    </path>
+                  </svg>
+                  View on GitHub
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div id="about-community" class="about-section hidden">
+            <div class="settings-card">
+              <div class="settings-card-title">Community</div>
+              <div class="settings-card-body">
+                <button id="openMyDiscordBtn" class="about-link-btn"
+                  onclick="window.Downloader.openInBrowser('https://discord.gg/SRYzqKRRgQ')">
+                  <svg viewBox="0 0 24 24" width="12" height="12" stroke="currentColor" stroke-width="2" fill="none"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+                  </svg>
+                  SakugaFlow Discord Server
+                </button>
+                <button id="openSakugloaderDiscordBtn" class="about-link-btn"
+                  onclick="window.Downloader.openInBrowser('https://discord.gg/ysFGJGdgzf')">
+                  <svg viewBox="0 0 24 24" width="12" height="12" stroke="currentColor" stroke-width="2" fill="none"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+                  </svg>
+                  Sakugaloader Discord Server
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div id="about-credits" class="about-section hidden">
+            <div class="settings-card">
+              <div class="settings-card-title">Credits & Background</div>
+              <div class="settings-card-body">
+                <p>Credit for the original concept of a dedicated Sakugabooru fetcher extension for After Effects goes to
+                  the creators of "Sakugaloader".</p>
+                  <button id="openSakugabooruBtn" class="about-link-btn"
+                    onclick="window.Downloader.openInBrowser('https://sakugabooru.com/')">
+                    <svg viewBox="0 0 24 24" width="12" height="12" stroke="currentColor" stroke-width="2" fill="none"
+                      stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                      <polyline points="15 3 21 3 21 9"></polyline>
+                      <line x1="10" y1="14" x2="21" y2="3"></line>
+                    </svg>
+                    Open Sakugabooru
+                  </button>
+
+                  <div class="about-divider"></div>
+
+                  <h3>Why this project was created</h3>
+                  <p>When the concept of an After Effects Sakugabooru loader was first released, I wanted to contribute to
+                    its development. Specifically, I wanted to help fix bugs, optimize the code, and maintain support for
+                    older versions of After Effects.</p>
+                  <p>Because collaboration was not possible and support for older AE versions was dropped in the original
+                    tool, I decided to build a new alternative from scratch.</p>
+                  <p>The goal is to ensure editors have access to a lightweight, stable loader regardless of their hardware
+                    or software setup. This extension is written entirely from the ground up, shares no code with other
+                    plugins, and supports CC 2018 through CC 2026.</p>
+
+                  <div class="about-divider"></div>
+
+                  <h3>Purpose</h3>
+                  <p>This project is an independent effort to offer the AMV community a simple, high-performance
+                    alternative. Building alternative tools is a standard practice in software development, and I respect
+                    the concept that inspired this project.</p>
+                  <p>All code was written from scratch without using any resources from the original plugin. It is
+                    open-source, community-focused, and designed to give editors another choice for their workflow.</p>
+
+                  <div class="about-divider"></div>
+
+                  <p class="about-small">Made for the AMV community.</p>
+              </div>
+            </div>
+          </div>
+
+          <div id="about-usage" class="about-section hidden">
+            <div class="settings-card">
+              <div class="settings-card-title">Usage notice</div>
+              <div class="settings-card-body">
+                <p>Use responsibly. This extension does not own, host, or license any clips. All rights belong to their
+                  original copyright holders.</p>
+                <p>Do not redistribute downloaded clips as packs, sell downloaded content, or claim ownership of any
+                  material.</p>
+                <p class="about-small">Unofficial tool by Moongetsu.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <div id="bulkBar" class="bulk-bar hidden">
+    <div id="bulkInfo" class="bulk-info">0 selected</div>
+    <button id="clearSelectionBtn" class="bulk-secondary-btn">Clear</button>
+    <button id="downloadSelectedBtn" class="bulk-main-btn">Download Selected</button>
+  </div>
+
+  <div id="libraryActionBar" class="bulk-bar hidden">
+    <div id="libraryActionInfo" class="bulk-info">No clip selected</div>
+    <button id="sendSelectedToUpscaleBtn" class="bulk-secondary-btn">Send to Upscale</button>
+    <button id="importSelectedBtn" class="bulk-main-btn">Import to Timeline</button>
+  </div>
+
+  <div id="playerOverlay" class="player-overlay hidden">
+    <div class="player-window">
+      <div class="player-header">
+        <div id="playerTitle" class="player-title">Preview</div>
+        <button id="playerCloseBtn" class="player-close-btn">×</button>
+      </div>
+      <div id="playerContent" class="player-content"></div>
+    </div>
+  </div>
+
+  <script src="./js/CSInterface.js"></script>
+  <script src="./js/utils/storage.js"></script>
+  <script src="./js/utils/fileSystem.js"></script>
+  <script src="./js/utils/downloader.js"></script>
+  <script src="./js/console.js"></script>
+  <script src="./js/components/dropdown.js"></script>
+  <script src="./js/components/settingsPanel.js"></script>
+  <script src="./js/components/searchPanel.js"></script>
+  <script src="./js/components/playerOverlay.js"></script>
+  <script src="./js/components/libraryPanel.js"></script>
+  <script src="./js/components/upscalePanel.js"></script>
+  <script src="./js/components/consolePanel.js"></script>
+  <script src="./js/components/scenePacksPanel.js"></script>
+  <script src="./js/components/toolsSetup.js"></script>
+  <script src="./js/components/customSlider.js"></script>
+  <script src="./js/components/customSwitcher.js"></script>
+  <script src="./js/components/aboutPanel.js"></script>
+  <script src="./js/main.js"></script>
+</body>
+
+</html>

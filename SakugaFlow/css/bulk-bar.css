@@ -1,0 +1,61 @@
+.bulk-bar {
+  position: fixed;
+  left: 10px;
+  right: 10px;
+  bottom: 10px;
+  height: 40px;
+  background: var(--bg-secondary);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-sm);
+  padding: 0 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: var(--shadow-md);
+  z-index: 999;
+  animation: slideUp 0.15s var(--ease-out);
+}
+
+.bulk-info {
+  font-weight: 600;
+  color: var(--text-primary);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+
+.bulk-secondary-btn {
+  height: 24px;
+  background: var(--bg-primary);
+  border: 1px solid var(--glass-border);
+  color: var(--text-secondary);
+  border-radius: var(--radius-sm);
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  padding: 0 10px;
+  transition: all 0.15s var(--ease-out);
+}
+
+.bulk-secondary-btn:hover {
+  border-color: var(--text-muted);
+  color: var(--text-primary);
+}
+
+.bulk-main-btn {
+  height: 24px;
+  background: transparent;
+  border: 1px solid var(--accent-color);
+  color: var(--accent-color);
+  border-radius: var(--radius-sm);
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  padding: 0 10px;
+  transition: all 0.15s var(--ease-out);
+}
+
+.bulk-main-btn:hover {
+  background: var(--accent-color);
+  color: #000;
+}

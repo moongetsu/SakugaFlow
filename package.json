@@ -1,0 +1,14 @@
+{
+  "name": "sakugaflow",
+  "version": "0.1b",
+  "description": "SakugaFlow — After Effects extension for sakugabooru",
+  "private": true,
+  "scripts": {
+    "build": "node tools/build.js --target=2020",
+    "build:2018": "node tools/build.js --target=2018",
+    "build:2020": "node tools/build.js --target=2020",
+    "build:2022": "node tools/build.js --target=2022",
+    "build:all": "node tools/build.js --target=2018 && node tools/build.js --target=2020 && node tools/build.js --target=2022 && node tools/generate-docs.js",
+    "docs": "node tools/generate-docs.js"
+  }
+}

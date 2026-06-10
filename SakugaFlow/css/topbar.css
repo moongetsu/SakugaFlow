@@ -1,0 +1,82 @@
+.topbar {
+  height: var(--topbar-height);
+  background: var(--topbar-bg);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  border-bottom: 1.5px solid var(--glass-border);
+  flex-shrink: 0;
+  padding: 0 10px;
+  position: relative;
+  z-index: 50;
+}
+
+.topbar-brand {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+}
+
+.topbar-logo-img {
+  height: 20px;
+  width: auto;
+  object-fit: contain;
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: crisp-edges;
+}
+
+.topbar-nav {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 6px;
+  flex: 1;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scrollbar-width: none;
+}
+
+.topbar-nav::-webkit-scrollbar {
+  display: none;
+}
+
+.topbar-tab {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: var(--radius-sm);
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all 0.15s var(--ease-out);
+  border: 1px solid var(--glass-border);
+  background: var(--bg-secondary);
+  padding: 0;
+}
+
+.topbar-tab svg {
+  width: 14px;
+  height: 14px;
+}
+
+.topbar-tab:hover {
+  color: var(--text-primary);
+  background: var(--bg-hover);
+  border-color: var(--text-muted);
+}
+
+.topbar-tab.active {
+  color: var(--accent-color);
+  background: var(--bg-active);
+  border-color: var(--accent-color);
+}
+
+.topbar-end {
+  display: none;
+}
+
+.has-custom-background .topbar {
+  background: rgba(var(--topbar-bg-rgb), var(--glass-opacity));
+  backdrop-filter: blur(8px);
+}

@@ -1,0 +1,82 @@
+name: Build
+
+on:
+  push:
+    branches: [main]
+    tags: ['v*']
+  pull_request:
+    branches: [main]
+  release:
+    types: [published]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: windows-latest
+    strategy:
+      matrix:
+        target: ['2018', '2020', '2022']
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+          cache: npm
+          cache-dependency-path: tools/package-lock.json
+
+      - name: Install dependencies
+        run: npm ci
+        working-directory: tools
+
+      - name: Restore cert
+        if: github.event_name != 'pull_request'
+        run: |
+          if ($env:CERT_P12_B64) {
+            [IO.File]::WriteAllBytes("$PWD\cert.p12", [Convert]::FromBase64String($env:CERT_P12_B64))
+            Write-Host "Certificate restored."
+          } else {
+            Write-Host "CERT_P12_B64 secret not set. Self-signed will be generated."
+          }
+        working-directory: tools
+        env:
+          CERT_P12_B64: ${{ secrets.CERT_P12_B64 }}
+
+      - name: Build AE${{ matrix.target }}
+        run: node build.js --target=${{ matrix.target }}
+        working-directory: tools
+
+      - name: Upload extension folder
+        uses: actions/upload-artifact@v4
+        with:
+          name: SakugaFlow_AE${{ matrix.target }}
+          path: dist/AE${{ matrix.target }}/SakugaFlow/
+          if-no-files-found: error
+
+      - name: Upload ZXP
+        uses: actions/upload-artifact@v4
+        with:
+          name: SakugaFlow_ZXP_AE${{ matrix.target }}
+          path: dist/SakugaFlow_AE${{ matrix.target }}.zxp
+          if-no-files-found: warn
+
+  release:
+    needs: build
+    if: github.event_name == 'release'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download ZXP artifacts
+        uses: actions/download-artifact@v4
+        with:
+          pattern: SakugaFlow_ZXP_*
+          merge-multiple: true
+
+      - name: Upload to release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: SakugaFlow_*.zxp
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

@@ -49,42 +49,22 @@ jobs:
         run: node build.js --target=${{ matrix.target }}
         working-directory: tools
 
-      - name: Upload extension folder
+      - name: Upload Artifacts
         uses: actions/upload-artifact@v4
         with:
           name: SakugaFlow_AE${{ matrix.target }}
-          path: dist/AE${{ matrix.target }}/SakugaFlow/
+          path: dist/AE${{ matrix.target }}/
           if-no-files-found: error
-
-      - name: Upload ZXP
-        uses: actions/upload-artifact@v4
-        with:
-          name: SakugaFlow_ZXP_AE${{ matrix.target }}
-          path: dist/SakugaFlow_AE${{ matrix.target }}.zxp
-          if-no-files-found: warn
-
-      - name: Upload EXE
-        uses: actions/upload-artifact@v4
-        with:
-          name: SakugaFlow_EXE_AE${{ matrix.target }}
-          path: dist/AE${{ matrix.target }}/SakugaFlowSetup_AE${{ matrix.target }}.exe
-          if-no-files-found: warn
 
   release:
     needs: build
     if: github.event_name == 'release'
     runs-on: ubuntu-latest
     steps:
-      - name: Download ZXP artifacts
+      - name: Download Artifacts
         uses: actions/download-artifact@v4
         with:
-          pattern: SakugaFlow_ZXP_*
-          merge-multiple: true
-
-      - name: Download EXE artifacts
-        uses: actions/download-artifact@v4
-        with:
-          pattern: SakugaFlow_EXE_*
+          pattern: SakugaFlow_AE*
           merge-multiple: true
 
       - name: Upload to release

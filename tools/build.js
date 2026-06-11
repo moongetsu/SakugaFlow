@@ -83,7 +83,7 @@ async function runBuild() {
     console.log('\u{1F4C2} Copying files to dist...');
     copyFolderSync(SRC_DIR, DIST_DIR);
 
-    // Apply compatibility overlays if they exist
+    
     const compatDir = path.join(__dirname, 'compat', TARGET);
     if (fs.existsSync(compatDir)) {
         console.log(`\u{1F4C2} Applying compatibility overlay for ${PROFILE.label} (${TARGET})...`);
@@ -230,12 +230,12 @@ async function runBuild() {
     let isccPath = null;
     const { execSync } = require('child_process');
     
-    // First check if iscc is available in the system PATH
+    
     try {
         execSync('iscc /?', { stdio: 'ignore' });
         isccPath = 'iscc';
     } catch (e) {
-        // Not in PATH, check standard paths
+        
         for (const p of isccPaths) {
             if (fs.existsSync(p)) {
                 isccPath = p;
@@ -309,6 +309,7 @@ async function runBuild() {
         `xcopy /s /e /y "%SRC_DIR%\\*" "%DEST_DIR%\\" >nul`,
         ``,
         `echo [2/3] Registering debug keys for After Effects...`,
+        ...(TARGET === '2018' ? [`reg add "HKCU\\\\Software\\\\Adobe\\\\CSXS.8" /v PlayerDebugMode /t REG_SZ /d 1 /f >nul`,] : []),
         `reg add "HKCU\\Software\\Adobe\\CSXS.9" /v PlayerDebugMode /t REG_SZ /d 1 /f >nul`,
         `reg add "HKCU\\Software\\Adobe\\CSXS.10" /v PlayerDebugMode /t REG_SZ /d 1 /f >nul`,
         `reg add "HKCU\\Software\\Adobe\\CSXS.11" /v PlayerDebugMode /t REG_SZ /d 1 /f >nul`,

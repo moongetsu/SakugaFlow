@@ -169,6 +169,13 @@ body::after {
   flex-direction: column;
 }
 
+#consoleView.tab-content:not(.hidden) {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: hidden;
+}
+
 #aboutView.tab-content:not(.hidden) {
   display: flex;
   flex-direction: column;

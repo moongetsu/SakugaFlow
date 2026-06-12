@@ -1,7 +1,7 @@
 (function () {
   const nodeRequire = (typeof window !== 'undefined' && window.cep && window.cep.node && window.cep.node.require)
-      ? window.cep.node.require
-      : (typeof require !== 'undefined' ? require : null);
+    ? window.cep.node.require
+    : (typeof require !== 'undefined' ? require : null);
 
   const https = nodeRequire ? nodeRequire("https") : null;
   const http = nodeRequire ? nodeRequire("http") : null;
@@ -10,9 +10,9 @@
   const childProcess = nodeRequire ? nodeRequire("child_process") : null;
   const urlModule = nodeRequire ? nodeRequire("url") : null;
 
-  
-  
-  
+
+
+
   function mkdirpSync(dirPath) {
     if (!fs || !dirPath) return;
     var resolved = path ? path.resolve(dirPath) : dirPath;
@@ -30,7 +30,7 @@
         }
       } catch (e) {
         if (e.code !== 'EEXIST') {
-          try { if (!fs.existsSync(current)) { console.error('mkdirpSync: failed at', current, e.message); } } catch (e2) {}
+          try { if (!fs.existsSync(current)) { console.error('mkdirpSync: failed at', current, e.message); } } catch (e2) { }
         }
       }
     }
@@ -138,45 +138,7 @@
     },
 
     getJsonFallback(fixed, done, timeoutMs) {
-      const self = this;
-
-      if (typeof window !== 'undefined' && window.fetch) {
-        this.debugLog("getJsonFallback: Browser fetch is available, trying browser fetch...");
-        const controller = new AbortController();
-        const signal = controller.signal;
-        const timeoutId = setTimeout(() => {
-          self.debugLog("getJsonFallback: Browser fetch timeout triggered, aborting...");
-          try { controller.abort(); } catch(e) {}
-        }, timeoutMs);
-
-        window.fetch(fixed, {
-          headers: {
-            "Accept": "application/json"
-          },
-          signal: signal
-        })
-        .then(res => {
-          self.debugLog(`getJsonFallback: Browser fetch response received. Status: ${res.status}, Ok: ${res.ok}`);
-          clearTimeout(timeoutId);
-          if (res.ok) {
-            return res.json();
-          } else {
-            throw new Error("HTTP " + res.status);
-          }
-        })
-        .then(data => {
-          self.debugLog("getJsonFallback: Browser fetch json parsed successfully");
-          done(null, data);
-        })
-        .catch(err => {
-          clearTimeout(timeoutId);
-          self.debugLog(`getJsonFallback: Browser fetch failed. Error: ${err.message}. Falling back to Node getJsonNode...`);
-          this.getJsonNode(fixed, done, timeoutMs);
-        });
-        return;
-      }
-
-      this.debugLog("getJsonFallback: Browser fetch NOT available, going straight to Node getJsonNode...");
+      this.debugLog("getJsonFallback: Bypassing browser fetch and going straight to Node getJsonNode...");
       this.getJsonNode(fixed, done, timeoutMs);
     },
 
@@ -241,7 +203,7 @@
           this.debugLog("getJsonNode request timeout event triggered");
           try {
             request.abort();
-          } catch (e) {}
+          } catch (e) { }
           done("Request timed out after " + Math.round(timeoutMs / 1000) + "s");
         });
       } catch (e) {
@@ -312,7 +274,7 @@
         file.on("error", (err) => {
           try {
             fs.unlinkSync(destination);
-          } catch (e) {}
+          } catch (e) { }
           done(err.message);
         });
       };
@@ -322,10 +284,10 @@
       request.setTimeout(30000, () => {
         try {
           request.abort();
-        } catch (e) {}
+        } catch (e) { }
         try {
           fs.unlinkSync(destination);
-        } catch (e) {}
+        } catch (e) { }
         done("Timeout");
       });
 
@@ -409,7 +371,7 @@
         file.on("error", (err) => {
           try {
             fs.unlinkSync(destination);
-          } catch (e) {}
+          } catch (e) { }
           callback(err.message);
         });
       };
@@ -419,10 +381,10 @@
       request.setTimeout(45000, () => {
         try {
           request.abort();
-        } catch (e) {}
+        } catch (e) { }
         try {
           fs.unlinkSync(destination);
-        } catch (e) {}
+        } catch (e) { }
         callback("Timeout");
       });
 
@@ -438,7 +400,7 @@
           window.cep.util.openURLInDefaultBrowser(fixed);
           return;
         }
-      } catch (e) {}
+      } catch (e) { }
 
       try {
         if (!childProcess) return;

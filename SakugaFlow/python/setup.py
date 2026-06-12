@@ -1,5 +1,12 @@
 import sys, os, json, shutil, tempfile, zipfile, io, subprocess
 
+# Globally bypass SSL verification for all urllib requests in this script (fixes CERTIFICATE_VERIFY_FAILED)
+try:
+    import ssl
+    ssl._create_default_https_context = ssl._create_unverified_context
+except Exception:
+    pass
+
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 
 FFMPEG_URL = "https://www.gyan.dev/ffmpeg/builds/ffmpeg-release-essentials.zip"
@@ -20,8 +27,10 @@ def download_file(url, dest_path, label):
     log("info", f"Downloading {label}...", pct=0)
 
     try:
+        import ssl
+        context = ssl._create_unverified_context()
         req = urllib.request.Request(url, headers={"User-Agent": "SakugaFlow/1.0"})
-        resp = urllib.request.urlopen(req, timeout=30)
+        resp = urllib.request.urlopen(req, timeout=30, context=context)
     except Exception as e:
         log("error", f"Could not connect to download server: {e}")
         return False
@@ -223,9 +232,10 @@ def install_pip_packages():
         return False
 
 def main():
-    log("info", "SakugaFlow Tools Installer")
+    log("info", "SakugaFlow Tools Installer [Bypass SSL = True]")
     log("info", f"Target directory: {SCRIPT_DIR}")
     log("info", f"Python: {sys.version}")
+    log("info", f"Script Path: {os.path.abspath(__file__)}")
 
     results = {"ffmpeg": False, "ffprobe": False, "realesrgan": False, "pip": False}
 

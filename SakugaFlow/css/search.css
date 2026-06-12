@@ -3,6 +3,7 @@
   gap: 6px;
   margin-bottom: 8px;
   position: relative;
+  z-index: 10;
 }
 
 .search-submit-btn {
@@ -279,12 +280,15 @@
 
 .search-filters-row {
   display: flex;
+  flex-wrap: wrap;
   gap: 12px;
   margin-bottom: 8px;
   padding: 6px 10px;
   background: var(--bg-secondary);
   border: 1px solid var(--glass-border);
   border-radius: var(--radius-sm);
+  position: relative;
+  z-index: 5;
 }
 
 .filter-group {

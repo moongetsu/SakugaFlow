@@ -5,24 +5,24 @@ const jsxbin = require('jsxbin');
 const zxpSignCmd = require('zxp-sign-cmd');
 
 const VERSION_PROFILES = {
-  '2018': {
-    label: 'AE2018',
-    hostVersion: '[15.0,15.9]',
-    csxsVersion: '8.0',
-    description: 'After Effects CC 2017–2018 (v15.x)'
-  },
-  '2020': {
-    label: 'AE2020',
-    hostVersion: '[16.0,18.9]',
-    csxsVersion: '10.0',
-    description: 'After Effects CC 2019–2021 (v16.x–v18.x)'
-  },
-  '2022': {
-    label: 'AE2022',
-    hostVersion: '[22.0,99.9]',
-    csxsVersion: '12.0',
-    description: 'After Effects CC 2022+ (v22.x+)'
-  }
+    '2018': {
+        label: 'AE2018',
+        hostVersion: '[13.5,20.0]',
+        csxsVersion: '6.0',
+        description: 'After Effects CC 2017–2018 (v15.x)'
+    },
+    '2020': {
+        label: 'AE2020',
+        hostVersion: '[16.0,18.9]',
+        csxsVersion: '10.0',
+        description: 'After Effects CC 2019–2021 (v16.x–v18.x)'
+    },
+    '2022': {
+        label: 'AE2022',
+        hostVersion: '[22.0,99.9]',
+        csxsVersion: '12.0',
+        description: 'After Effects CC 2022+ (v22.x+)'
+    }
 };
 
 const targetArg = process.argv.find(a => a.startsWith('--target='));
@@ -30,8 +30,8 @@ const TARGET = targetArg ? targetArg.split('=')[1] : '2020';
 const PROFILE = VERSION_PROFILES[TARGET];
 
 if (!PROFILE) {
-  console.error(`Unknown target: ${TARGET}. Valid targets: ${Object.keys(VERSION_PROFILES).join(', ')}`);
-  process.exit(1);
+    console.error(`Unknown target: ${TARGET}. Valid targets: ${Object.keys(VERSION_PROFILES).join(', ')}`);
+    process.exit(1);
 }
 
 const SRC_DIR = path.join(__dirname, '..', 'SakugaFlow');
@@ -73,24 +73,24 @@ function getFiles(dir, extension, files_ = []) {
 async function runBuild() {
     console.log(`\u{1F680} Starting ${EXTENSION_NAME} ${PROFILE.label} Build (${PROFILE.description})...`);
 
-    
+
     if (fs.existsSync(DIST_DIR)) {
         console.log('\u{1F9F9} Cleaning existing dist directory...');
         fs.rmSync(DIST_DIR, { recursive: true, force: true });
     }
 
-    
+
     console.log('\u{1F4C2} Copying files to dist...');
     copyFolderSync(SRC_DIR, DIST_DIR);
 
-    
+
     const compatDir = path.join(__dirname, 'compat', TARGET);
     if (fs.existsSync(compatDir)) {
         console.log(`\u{1F4C2} Applying compatibility overlay for ${PROFILE.label} (${TARGET})...`);
         copyFolderSync(compatDir, DIST_DIR);
     }
 
-    
+
     console.log('\u{1F512} Obfuscating JavaScript files...');
     const jsFiles = getFiles(DIST_DIR, '.js');
 
@@ -132,7 +132,7 @@ async function runBuild() {
         }
     }
 
-    
+
     const jsxPath = path.join(DIST_DIR, 'jsx', 'host.jsx');
     const jsxbinPath = path.join(DIST_DIR, 'jsx', 'host.jsxbin');
 
@@ -150,7 +150,7 @@ async function runBuild() {
         console.warn('\u26A0\uFE0F host.jsx not found in dist/jsx/');
     }
 
-    
+
     const manifestPath = path.join(DIST_DIR, 'CSXS', 'manifest.xml');
     if (fs.existsSync(manifestPath)) {
         console.log(`\u{1F4DD} Patching manifest.xml for ${PROFILE.label}...`);
@@ -179,7 +179,7 @@ async function runBuild() {
 
     console.log(`\n\u2728 Build process completed! Extension files in "dist/${PROFILE.label}/${EXTENSION_NAME}".`);
 
-    
+
     console.log('\n\u{1F4E6} Packaging and signing ZXP...');
     const certPath = path.join(__dirname, 'cert.p12');
     const versionDir = path.join(__dirname, '..', 'dist', PROFILE.label);
@@ -216,7 +216,7 @@ async function runBuild() {
         console.log('     The extension folder is still available in dist/ for manual packaging.');
     }
 
-    
+
     console.log('\n\u{1F6E0}\uFE0F Building Inno Setup EXE Installer...');
     const isccPaths = [
         'C:\\Program Files\\Inno Setup 6\\ISCC.exe',
@@ -229,13 +229,13 @@ async function runBuild() {
     }
     let isccPath = null;
     const { execSync } = require('child_process');
-    
-    
+
+
     try {
         execSync('iscc /?', { stdio: 'ignore' });
         isccPath = 'iscc';
     } catch (e) {
-        
+
         for (const p of isccPaths) {
             if (fs.existsSync(p)) {
                 isccPath = p;
@@ -249,7 +249,7 @@ async function runBuild() {
             console.log('   - Compiling installer script...');
             const issPath = path.join(__dirname, 'installer.iss');
             const outputName = `${EXTENSION_NAME}Setup_${PROFILE.label}`;
-            const cmd = isccPath === 'iscc' 
+            const cmd = isccPath === 'iscc'
                 ? `iscc /DSourcePath="${DIST_DIR}" /DOutputDir="${versionDir}" /DOutputName="${outputName}" "${issPath}"`
                 : `"${isccPath}" /DSourcePath="${DIST_DIR}" /DOutputDir="${versionDir}" /DOutputName="${outputName}" "${issPath}"`;
             execSync(cmd, { stdio: 'inherit' });
@@ -262,7 +262,7 @@ async function runBuild() {
         console.log('     Please compile tools/installer.iss manually using Inno Setup on Windows to create the EXE.');
     }
 
-    
+
     const batPath = path.join(versionDir, 'Install-Windows.bat');
     console.log('\n\u{1F4DD} Generating Windows batch installer...');
     fs.writeFileSync(batPath, [
@@ -309,7 +309,7 @@ async function runBuild() {
         `xcopy /s /e /y "%SRC_DIR%\\*" "%DEST_DIR%\\" >nul`,
         ``,
         `echo [2/3] Registering debug keys for After Effects...`,
-        ...(TARGET === '2018' ? [`reg add "HKCU\\\\Software\\\\Adobe\\\\CSXS.8" /v PlayerDebugMode /t REG_SZ /d 1 /f >nul`,] : []),
+        `reg add "HKCU\\Software\\Adobe\\CSXS.8" /v PlayerDebugMode /t REG_SZ /d 1 /f >nul`,
         `reg add "HKCU\\Software\\Adobe\\CSXS.9" /v PlayerDebugMode /t REG_SZ /d 1 /f >nul`,
         `reg add "HKCU\\Software\\Adobe\\CSXS.10" /v PlayerDebugMode /t REG_SZ /d 1 /f >nul`,
         `reg add "HKCU\\Software\\Adobe\\CSXS.11" /v PlayerDebugMode /t REG_SZ /d 1 /f >nul`,
